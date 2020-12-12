@@ -4813,4 +4813,3 @@ namespace TriangleTests
     }
 
 } // namespace TriangleTests
-

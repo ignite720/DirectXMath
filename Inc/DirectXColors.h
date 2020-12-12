@@ -162,4 +162,3 @@ namespace DirectX
     } // namespace Colors
 
 } // namespace DirectX
-

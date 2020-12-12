@@ -15,9 +15,22 @@
 
 #define DIRECTX_MATH_VERSION 316
 
+///begin_github
 #if defined(_MSC_VER) && (_MSC_VER < 1910)
 #error DirectX Math requires Visual C++ 2017 or later.
 #endif
+///end_github
+///begin_xboxone
+
+#if defined(_DURANGO) && defined(_M_X64) && !defined(_XM_F16C_INTRINSICS_) && !defined(_XM_NO_INTRINSICS_)
+#define _XM_F16C_INTRINSICS_
+#endif
+///end_xboxone
+///begin_windows
+#if defined(_MSC_VER) && defined(_GAMING_XBOX) && defined(_M_X64) && !defined(_XM_F16C_INTRINSICS_) && !defined(_XM_NO_INTRINSICS_)
+#define _XM_F16C_INTRINSICS_
+#endif
+///end_windows
 
 #if defined(_MSC_VER) && !defined(_M_ARM) && !defined(_M_ARM64) && !defined(_M_HYBRID_X86_ARM64) && (!_MANAGED) && (!_M_CEE) && (!defined(_M_IX86_FP) || (_M_IX86_FP > 1)) && !defined(_XM_NO_INTRINSICS_) && !defined(_XM_VECTORCALL_)
 #define _XM_VECTORCALL_ 1
@@ -89,9 +102,11 @@
 #endif
 #endif // !_XM_ARM_NEON_INTRINSICS_ && !_XM_SSE_INTRINSICS_ && !_XM_NO_INTRINSICS_
 
+///begin_github
 #if defined(_XM_SSE_INTRINSICS_) && defined(_MSC_VER) && (_MSC_VER >= 1920) && !defined(__clang__) && !defined(_XM_SVML_INTRINSICS_) && !defined(_XM_DISABLE_INTEL_SVML_)
 #define _XM_SVML_INTRINSICS_
 #endif
+///end_github
 
 #if !defined(_XM_NO_XMVECTOR_OVERLOADS_) && (defined(__clang__) || defined(__GNUC__))
 #define _XM_NO_XMVECTOR_OVERLOADS_
@@ -2239,4 +2254,3 @@ namespace DirectX
 #pragma warning(pop)
 
 } // namespace DirectX
-

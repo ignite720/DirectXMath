@@ -10,8 +10,18 @@
 #pragma once
 
 #if defined(_XM_NO_INTRINSICS_)
+///begin_github
 #define XMISNAN(x)  isnan(x)
 #define XMISINF(x)  isinf(x)
+///end_github
+///begin_xboxone
+#define XMISNAN(x)  ((*(const uint32_t*)&(x) & 0x7F800000) == 0x7F800000 && (*(const uint32_t*)&(x) & 0x7FFFFF) != 0)
+#define XMISINF(x)  ((*(const uint32_t*)&(x) & 0x7FFFFFFF) == 0x7F800000)
+///end_xboxone
+///begin_windows
+#define XMISNAN(x)  ((*(const uint32_t*)&(x) & 0x7F800000) == 0x7F800000 && (*(const uint32_t*)&(x) & 0x7FFFFF) != 0)
+#define XMISINF(x)  ((*(const uint32_t*)&(x) & 0x7FFFFFFF) == 0x7F800000)
+///end_windows
 #endif
 
 #if defined(_XM_SSE_INTRINSICS_)
@@ -3232,6 +3242,7 @@ inline XMVECTOR XM_CALLCONV XMVectorReciprocalSqrt(FXMVECTOR V) noexcept
 inline XMVECTOR XM_CALLCONV XMVectorExp2(FXMVECTOR V) noexcept
 {
 #if defined(_XM_NO_INTRINSICS_)
+///begin_github
     XMVECTORF32 Result = { { {
             exp2f(V.vector4_f32[0]),
             exp2f(V.vector4_f32[1]),
@@ -3239,6 +3250,25 @@ inline XMVECTOR XM_CALLCONV XMVectorExp2(FXMVECTOR V) noexcept
             exp2f(V.vector4_f32[3])
         } } };
     return Result.v;
+///end_github
+///begin_xboxone
+    XMVECTORF32 Result = { { {
+            powf(2.0f, V.vector4_f32[0]),
+            powf(2.0f, V.vector4_f32[1]),
+            powf(2.0f, V.vector4_f32[2]),
+            powf(2.0f, V.vector4_f32[3])
+        } } };
+    return Result.v;
+///end_xboxone
+///begin_windows
+    XMVECTORF32 Result = { { {
+            powf(2.0f, V.vector4_f32[0]),
+            powf(2.0f, V.vector4_f32[1]),
+            powf(2.0f, V.vector4_f32[2]),
+            powf(2.0f, V.vector4_f32[3])
+        } } };
+    return Result.v;
+///end_windows
 #elif defined(_XM_ARM_NEON_INTRINSICS_)
     int32x4_t itrunc = vcvtq_s32_f32(V);
     float32x4_t ftrunc = vcvtq_f32_s32(itrunc);
@@ -3579,6 +3609,7 @@ namespace Internal
 inline XMVECTOR XM_CALLCONV XMVectorLog2(FXMVECTOR V) noexcept
 {
 #if defined(_XM_NO_INTRINSICS_)
+///begin_github
     XMVECTORF32 Result = { { {
             log2f(V.vector4_f32[0]),
             log2f(V.vector4_f32[1]),
@@ -3586,6 +3617,29 @@ inline XMVECTOR XM_CALLCONV XMVectorLog2(FXMVECTOR V) noexcept
             log2f(V.vector4_f32[3])
         } } };
     return Result.v;
+///end_github
+///begin_xboxone
+    const float fScale = 1.4426950f; // (1.0f / logf(2.0f));
+
+    XMVECTORF32 Result = { { {
+            logf(V.vector4_f32[0]) * fScale,
+            logf(V.vector4_f32[1]) * fScale,
+            logf(V.vector4_f32[2]) * fScale,
+            logf(V.vector4_f32[3]) * fScale
+        } } };
+    return Result.v;
+///end_xboxone
+///begin_windows
+    const float fScale = 1.4426950f; // (1.0f / logf(2.0f));
+
+    XMVECTORF32 Result = { { {
+            logf(V.vector4_f32[0]) * fScale,
+            logf(V.vector4_f32[1]) * fScale,
+            logf(V.vector4_f32[2]) * fScale,
+            logf(V.vector4_f32[3]) * fScale
+        } } };
+    return Result.v;
+///end_windows
 #elif defined(_XM_ARM_NEON_INTRINSICS_)
     int32x4_t rawBiased = vandq_s32(vreinterpretq_s32_f32(V), g_XMInfinity);
     int32x4_t trailing = vandq_s32(vreinterpretq_s32_f32(V), g_XMQNaNTest);
@@ -14816,4 +14870,3 @@ inline XMVECTOR XM_CALLCONV operator*
 #undef XM3UNPACK3INTO4
 #undef XM3PACK4INTO3
 #endif
-

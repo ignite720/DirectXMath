@@ -1213,4 +1213,3 @@ namespace DirectX
     } // namespace PackedVector
 
 } // namespace DirectX
-

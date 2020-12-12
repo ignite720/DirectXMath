@@ -350,4 +350,3 @@ namespace DirectX
 #pragma warning(pop)
 
 } // namespace DirectX
-
