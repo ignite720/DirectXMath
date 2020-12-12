@@ -2324,7 +2324,7 @@ inline XMVECTOR XM_CALLCONV XMVectorRound(FXMVECTOR V) noexcept
     return Result.v;
 
 #elif defined(_XM_ARM_NEON_INTRINSICS_)
-#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || __aarch64__
+#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || defined(_M_ARM64EC) || __aarch64__
     return vrndnq_f32(V);
 #else
     uint32x4_t sign = vandq_u32(vreinterpretq_u32_f32(V), g_XMNegativeZero);
@@ -2384,7 +2384,7 @@ inline XMVECTOR XM_CALLCONV XMVectorTruncate(FXMVECTOR V) noexcept
     return Result;
 
 #elif defined(_XM_ARM_NEON_INTRINSICS_)
-#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || __aarch64__
+#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || defined(_M_ARM64EC) || __aarch64__
     return vrndq_f32(V);
 #else
     float32x4_t vTest = vabsq_f32(V);
@@ -2431,7 +2431,7 @@ inline XMVECTOR XM_CALLCONV XMVectorFloor(FXMVECTOR V) noexcept
         } } };
     return Result.v;
 #elif defined(_XM_ARM_NEON_INTRINSICS_)
-#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || __aarch64__
+#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || defined(_M_ARM64EC) || __aarch64__
     return vrndmq_f32(V);
 #else
     float32x4_t vTest = vabsq_f32(V);
@@ -2482,7 +2482,7 @@ inline XMVECTOR XM_CALLCONV XMVectorCeiling(FXMVECTOR V) noexcept
         } } };
     return Result.v;
 #elif defined(_XM_ARM_NEON_INTRINSICS_)
-#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || __aarch64__
+#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || defined(_M_ARM64EC) || __aarch64__
     return vrndpq_f32(V);
 #else
     float32x4_t vTest = vabsq_f32(V);
@@ -2775,7 +2775,7 @@ inline XMVECTOR XM_CALLCONV XMVectorSum(FXMVECTOR V) noexcept
     return Result.v;
 
 #elif defined(_XM_ARM_NEON_INTRINSICS_)
-#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || __aarch64__
+#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || defined(_M_ARM64EC) || __aarch64__
     float32x4_t vTemp = vpaddq_f32(V, V);
     return vpaddq_f32(vTemp, vTemp);
 #else
@@ -2980,7 +2980,7 @@ inline XMVECTOR XM_CALLCONV XMVectorMultiplyAdd
         } } };
     return Result.v;
 #elif defined(_XM_ARM_NEON_INTRINSICS_)
-#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || __aarch64__
+#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || defined(_M_ARM64EC) || __aarch64__
     return vfmaq_f32(V3, V1, V2);
 #else
     return vmlaq_f32(V3, V1, V2);
@@ -3007,7 +3007,7 @@ inline XMVECTOR XM_CALLCONV XMVectorDivide
         } } };
     return Result.v;
 #elif defined(_XM_ARM_NEON_INTRINSICS_)
-#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || __aarch64__
+#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || defined(_M_ARM64EC) || __aarch64__
     return vdivq_f32(V1, V2);
 #else
     // 2 iterations of Newton-Raphson refinement of reciprocal
@@ -3041,7 +3041,7 @@ inline XMVECTOR XM_CALLCONV XMVectorNegativeMultiplySubtract
         } } };
     return Result;
 #elif defined(_XM_ARM_NEON_INTRINSICS_)
-#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || __aarch64__
+#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || defined(_M_ARM64EC) || __aarch64__
     return vfmsq_f32(V3, V1, V2);
 #else
     return vmlsq_f32(V3, V1, V2);
@@ -3107,7 +3107,7 @@ inline XMVECTOR XM_CALLCONV XMVectorReciprocal(FXMVECTOR V) noexcept
         } } };
     return Result.v;
 #elif defined(_XM_ARM_NEON_INTRINSICS_)
-#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || __aarch64__
+#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || defined(_M_ARM64EC) || __aarch64__
     float32x4_t one = vdupq_n_f32(1.0f);
     return vdivq_f32(one, V);
 #else
@@ -8094,7 +8094,7 @@ inline XMFLOAT2* XM_CALLCONV XMVector2TransformCoordStream
 
                 XM_PREFETCH(pInputVector + (XM_CACHE_LINE_SIZE * 3));
 
-#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || __aarch64__
+#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || defined(_M_ARM64EC) || __aarch64__
                 V.val[0] = vdivq_f32(vResult0, W);
                 V.val[1] = vdivq_f32(vResult1, W);
 #else
@@ -8128,7 +8128,7 @@ inline XMFLOAT2* XM_CALLCONV XMVector2TransformCoordStream
         V = vget_high_f32(vResult);
         float32x2_t W = vdup_lane_f32(V, 1);
 
-#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || __aarch64__
+#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || defined(_M_ARM64EC) || __aarch64__
         V = vget_low_f32(vResult);
         V = vdiv_f32(V, W);
 #else
@@ -10872,7 +10872,7 @@ inline XMFLOAT3* XM_CALLCONV XMVector3TransformCoordStream
 
                 XM_PREFETCH(pInputVector + (XM_CACHE_LINE_SIZE * 5));
 
-#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || __aarch64__
+#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || defined(_M_ARM64EC) || __aarch64__
                 V.val[0] = vdivq_f32(vResult0, W);
                 V.val[1] = vdivq_f32(vResult1, W);
                 V.val[2] = vdivq_f32(vResult2, W);
@@ -10911,7 +10911,7 @@ inline XMFLOAT3* XM_CALLCONV XMVector3TransformCoordStream
         VH = vget_high_f32(vResult);
         XMVECTOR W = vdupq_lane_f32(VH, 1);
 
-#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || __aarch64__
+#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || defined(_M_ARM64EC) || __aarch64__
         vResult = vdivq_f32(vResult, W);
 #else
         // 2 iterations of Newton-Raphson refinement of reciprocal for W
@@ -11822,7 +11822,7 @@ inline XMFLOAT3* XM_CALLCONV XMVector3ProjectStream
 
                 XM_PREFETCH(pInputVector + (XM_CACHE_LINE_SIZE * 5));
 
-#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || __aarch64__
+#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || defined(_M_ARM64EC) || __aarch64__
                 vResult0 = vdivq_f32(vResult0, W);
                 vResult1 = vdivq_f32(vResult1, W);
                 vResult2 = vdivq_f32(vResult2, W);
@@ -11870,7 +11870,7 @@ inline XMFLOAT3* XM_CALLCONV XMVector3ProjectStream
             VH = vget_high_f32(vResult);
             XMVECTOR W = vdupq_lane_f32(VH, 1);
 
-#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || __aarch64__
+#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || defined(_M_ARM64EC) || __aarch64__
             vResult = vdivq_f32(vResult, W);
 #else
             // 2 iterations of Newton-Raphson refinement of reciprocal for W
@@ -12381,7 +12381,7 @@ inline XMFLOAT3* XM_CALLCONV XMVector3UnprojectStream
 
                 XM_PREFETCH(pInputVector + (XM_CACHE_LINE_SIZE * 5));
 
-#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || __aarch64__
+#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || defined(_M_ARM64EC) || __aarch64__
                 V.val[0] = vdivq_f32(vResult0, W);
                 V.val[1] = vdivq_f32(vResult1, W);
                 V.val[2] = vdivq_f32(vResult2, W);
@@ -12435,7 +12435,7 @@ inline XMFLOAT3* XM_CALLCONV XMVector3UnprojectStream
             VH = vget_high_f32(vResult);
             XMVECTOR W = vdupq_lane_f32(VH, 1);
 
-#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || __aarch64__
+#if defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || defined(_M_ARM64EC) || __aarch64__
             vResult = vdivq_f32(vResult, W);
 #else
             // 2 iterations of Newton-Raphson refinement of reciprocal for W
