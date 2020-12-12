@@ -1,0 +1,57 @@
+# This file is the build Pipeline to build and submit the DirectXMath vpack to Microsoft Collections Artifacts. 
+
+# 1. Trigger this build everytime something gets checked into ms_sdk_release
+trigger:
+  branches:
+      include:
+        - ms_sdk_release
+
+# 2. Use the Package ES Standard Build Pool / Codehub pool E to do the build. Demand: DotNetFramework should exist on the machine.
+pool:
+  name: Package ES Standard Build
+  demands: DotNetFramework
+
+steps:
+
+# 3. Use the vpack_layout.json file checked into the OSS repo to define the structure of the vpack to be generated.
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(BUILD.SOURCESDIRECTORY)\Inc'
+    Contents: '**'
+    TargetFolder: '$(BUILD.BINARIESDIRECTORY)\vpack'
+    CleanTargetFolder: 'true'
+
+- task: PowerShell@2
+  inputs:
+    targetType: 'inline'
+    script: 'Get-ChildItem -Path *.h,*.inl | %{ Rename-Item -Path $_ -NewName ("$($_.BaseName)p$($_.Extension)").ToLower() }'
+    workingDirectory: '$(BUILD.BINARIESDIRECTORY)\vpack'
+
+- task: CopyFiles@2
+  inputs:
+    SourceFolder: '$(BUILD.SOURCESDIRECTORY)'
+    Contents: |
+        README.md
+        LICENSE
+    TargetFolder: '$(BUILD.BINARIESDIRECTORY)\vpack'
+
+# 4. Create VPack using the specified package name and version number.
+- task: PkgESVPack@10
+  inputs:
+    vPackCmd: 'push'
+    versionAs: 'parts'
+    sourceDirectory: '$(BUILD.BINARIESDIRECTORY)\vpack'
+    description: '$(Build.Repository.Name).$(Build.SourceBranchName)'
+    pushPkgName: directxmath.oss
+    configurations: 'release'
+    platforms: 'any cpu'
+    majorVer: '3'
+    minorVer: '1'
+    patchVer: '6'
+    prereleaseVer: '$(Build.BuildId)'
+
+# 5. Finalize and clean up the build machine after the VPack is created and pushed.
+- task: PkgESLateTasks@10
+  displayName: 'Finalize and Clean Up'
+  inputs:
+    enablePostBuild: false
