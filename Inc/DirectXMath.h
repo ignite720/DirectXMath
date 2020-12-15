@@ -150,7 +150,7 @@
 #endif
 
 #elif defined(_XM_ARM_NEON_INTRINSICS_)
-#if defined(_MSC_VER) && (defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || defined(_M_ARM64EC))
+#if defined(_MSC_VER) && !defined(__clang__) && (defined(_M_ARM64) || defined(_M_HYBRID_X86_ARM64) || defined(_M_ARM64EC))
 #include <arm64_neon.h>
 #else
 #include <arm_neon.h>
