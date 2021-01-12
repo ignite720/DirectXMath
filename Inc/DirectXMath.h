@@ -19,7 +19,6 @@
 #if defined(_MSC_VER) && (_MSC_VER < 1910)
 #error DirectX Math requires Visual C++ 2017 or later.
 #endif
-
 ///end_github
 ///begin_xboxone
 #if defined(_DURANGO) && defined(_M_X64) && !defined(_XM_F16C_INTRINSICS_) && !defined(_XM_NO_INTRINSICS_)
