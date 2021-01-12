@@ -22,7 +22,6 @@
 
 ///end_github
 ///begin_xboxone
-
 #if defined(_DURANGO) && defined(_M_X64) && !defined(_XM_F16C_INTRINSICS_) && !defined(_XM_NO_INTRINSICS_)
 #define _XM_F16C_INTRINSICS_
 #endif
