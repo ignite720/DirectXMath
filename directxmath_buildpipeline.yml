@@ -36,7 +36,7 @@ steps:
     TargetFolder: '$(BUILD.BINARIESDIRECTORY)\vpack'
 
 # 4. Create VPack using the specified package name and version number.
-- task: PkgESVPack@10
+- task: PkgESVPack@12
   inputs:
     vPackCmd: 'push'
     versionAs: 'parts'
@@ -49,9 +49,4 @@ steps:
     minorVer: '1'
     patchVer: '6'
     prereleaseVer: '$(Build.BuildId)'
-
-# 5. Finalize and clean up the build machine after the VPack is created and pushed.
-- task: PkgESLateTasks@10
-  displayName: 'Finalize and Clean Up'
-  inputs:
-    enablePostBuild: false
+    provData: true
