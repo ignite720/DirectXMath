@@ -47,6 +47,6 @@ steps:
     platforms: 'any cpu'
     majorVer: '3'
     minorVer: '1'
-    patchVer: '6'
+    patchVer: '7'
     prereleaseVer: '$(Build.BuildId)'
     provData: true
