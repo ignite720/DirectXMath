@@ -209,11 +209,15 @@
 #define XM_PERMUTE_PS( v, c ) _mm_shuffle_ps((v), (v), c )
 #endif
 
+///begin_github
 #if defined(__GNUC__) && !defined(__clang__) && (__GNUC__ < 11)
+///end_github
 #define XM_LOADU_SI16( p ) _mm_cvtsi32_si128(*reinterpret_cast<unsigned short const*>(p))
+///begin_github
 #else
 #define XM_LOADU_SI16( p ) _mm_loadu_si16(p)
 #endif
+///end_github
 
 #endif // _XM_SSE_INTRINSICS_ && !_XM_NO_INTRINSICS_
 
