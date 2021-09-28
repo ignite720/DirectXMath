@@ -6,9 +6,9 @@ trigger:
       include:
         - ms_sdk_release
 
-# 2. Use the Package ES Standard Build Pool / Codehub pool E to do the build. Demand: DotNetFramework should exist on the machine.
+# 2. Demand: DotNetFramework should exist on the machine.
 pool:
-  name: Package ES Standard Build
+  name: GDKDevToolsVS19WDKPool
   demands: DotNetFramework
 
 steps:
