@@ -8,7 +8,7 @@ trigger:
 
 # 2. Use the Package ES Standard Build Pool / Codehub pool E to do the build. Demand: DotNetFramework should exist on the machine.
 pool:
-  name: Package ES Standard Build
+  name: GDKDevToolsMSCodeHubPool
   demands: DotNetFramework
 
 steps:
