@@ -1,5 +1,8 @@
 # This file is the build Pipeline to build and submit the DirectXMath vpack to Microsoft Collections Artifacts. 
 
+variables:
+  VPACK_PAT: $(VPackPAT)
+
 # 1. Trigger this build everytime something gets checked into ms_sdk_release
 trigger:
   branches:
@@ -50,3 +53,4 @@ steps:
     patchVer: '7'
     prereleaseVer: '$(Build.BuildId)'
     provData: true
+    paToken: $(VPACK_PAT)
