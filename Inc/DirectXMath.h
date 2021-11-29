@@ -111,12 +111,16 @@
 #define _XM_NO_XMVECTOR_OVERLOADS_
 #endif
 
+#ifdef _MSC_VER
 #pragma warning(push)
 #pragma warning(disable:4514 4820)
 // C4514/4820: Off by default noise
+#endif
 #include <math.h>
 #include <float.h>
+#ifdef _MSC_VER
 #pragma warning(pop)
+#endif
 
 #ifndef _XM_NO_INTRINSICS_
 
@@ -160,11 +164,15 @@
 #include "sal.h"
 #include <assert.h>
 
+#ifdef _MSC_VER
 #pragma warning(push)
 #pragma warning(disable : 4005 4668)
 // C4005/4668: Old header issue
+#endif
 #include <stdint.h>
+#ifdef _MSC_VER
 #pragma warning(pop)
+#endif
 
 #if __cplusplus >= 201703L
 #define XM_ALIGNED_DATA(x) alignas(x)
@@ -340,12 +348,14 @@ namespace DirectX
      *
      ****************************************************************************/
 
+#ifdef _MSC_VER    
 #pragma warning(push)
 #pragma warning(disable:4068 4201 4365 4324 4820)
      // C4068: ignore unknown pragmas
      // C4201: nonstandard extension used : nameless struct/union
      // C4365: Off by default noise
      // C4324/4820: padding warnings
+#endif
 
 #ifdef _PREFAST_
 #pragma prefast(push)
@@ -956,12 +966,12 @@ namespace DirectX
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
-
 #ifdef _PREFAST_
 #pragma prefast(pop)
 #endif
-
+#ifdef _MSC_VER
 #pragma warning(pop)
+#endif
 
 /****************************************************************************
  *
@@ -2080,13 +2090,15 @@ namespace DirectX
      *
      ****************************************************************************/
 
+#ifdef _MSC_VER    
 #pragma warning(push)
 #pragma warning(disable:4068 4214 4204 4365 4616 4640 6001 6101)
      // C4068/4616: ignore unknown pragmas
      // C4214/4204: nonstandard extension used
      // C4365/4640: Off by default noise
      // C6001/6101: False positives
-
+#endif
+    
 #ifdef _PREFAST_
 #pragma prefast(push)
 #pragma prefast(disable : 25000, "FXMVECTOR is 16 bytes")
@@ -2197,11 +2209,11 @@ namespace DirectX
 #ifdef __clang__
 #pragma clang diagnostic pop
 #endif
-
 #ifdef _PREFAST_
 #pragma prefast(pop)
 #endif
-
+#ifdef _MSC_VER    
 #pragma warning(pop)
+#endif
 
 } // namespace DirectX
