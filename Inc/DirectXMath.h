@@ -107,7 +107,7 @@
 #endif
 ///end_github
 
-#if !defined(_XM_NO_XMVECTOR_OVERLOADS_) && (defined(__clang__) || defined(__GNUC__))
+#if !defined(_XM_NO_XMVECTOR_OVERLOADS_) && (defined(__clang__) || defined(__GNUC__)) && !defined(_XM_NO_INTRINSICS_)
 #define _XM_NO_XMVECTOR_OVERLOADS_
 #endif
 
