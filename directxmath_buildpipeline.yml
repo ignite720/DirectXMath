@@ -3,54 +3,99 @@
 variables:
   VPACK_PAT: $(VPackPAT)
 
-# 1. Trigger this build everytime something gets checked into ms_sdk_release
-trigger:
-  branches:
-      include:
-        - ms_sdk_release
+resources:
+  repositories:
+  - repository: self
+    type: git
+    ref: refs/heads/ms_sdk_release
+    trigger:
+      branches:
+        include:
+          - ms_sdk_release
+        exclude:
+          - main
 
-# 2. Use the Package ES Standard Build Pool / Codehub pool E to do the build. Demand: DotNetFramework should exist on the machine.
+  - repository: templates_onebranch
+    type: git
+    name: OneBranch.Pipelines/GovernedTemplates
+    ref: refs/heads/main
+
 pool:
-  name: GDKDevToolsMSCodeHubPool
-  demands: DotNetFramework
+    name: GDKDevToolsMSCodeHubPool
+    demands: DotNetFramework
 
-steps:
+jobs:
+- job: VPACK_BUILD
+  displayName: 'Build and publish vpack'
+  cancelTimeoutInMinutes: 1
+  workspace:
+    clean: outputs
+  steps:
+  - checkout: self
+    path: 's'
 
-# 3. Use the vpack_layout.json file checked into the OSS repo to define the structure of the vpack to be generated.
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(BUILD.SOURCESDIRECTORY)\Inc'
-    Contents: '**'
-    TargetFolder: '$(BUILD.BINARIESDIRECTORY)\vpack'
-    CleanTargetFolder: 'true'
+  - task: PkgESSetupBuild@12
+    displayName: Package ES - Setup Build
+    inputs:
+      disableWorkspace: true
 
-- task: PowerShell@2
-  inputs:
-    targetType: 'inline'
-    script: 'Get-ChildItem -Path *.h,*.inl | %{ Rename-Item -Path $_ -NewName ("$($_.BaseName)p$($_.Extension)").ToLower() }'
-    workingDirectory: '$(BUILD.BINARIESDIRECTORY)\vpack'
+  - task: NodeTool@0
+    displayName: NPM install
+    inputs:
+      versionSpec: '14.x'
 
-- task: CopyFiles@2
-  inputs:
-    SourceFolder: '$(BUILD.SOURCESDIRECTORY)'
-    Contents: |
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: '$(BUILD.SOURCESDIRECTORY)\Inc'
+      Contents: '**'
+      TargetFolder: '$(BUILD.BINARIESDIRECTORY)\vpack'
+      CleanTargetFolder: true
+
+  - task: PowerShell@2
+    inputs:
+      targetType: 'inline'
+      script: 'Get-ChildItem -Path *.h,*.inl | %{ Rename-Item -Path $_ -NewName ("$($_.BaseName)p$($_.Extension)").ToLower() }'
+      workingDirectory: '$(BUILD.BINARIESDIRECTORY)\vpack'
+
+  - task: CopyFiles@2
+    inputs:
+      SourceFolder: '$(BUILD.SOURCESDIRECTORY)'
+      Contents: |
         README.md
         LICENSE
-    TargetFolder: '$(BUILD.BINARIESDIRECTORY)\vpack'
+      TargetFolder: '$(BUILD.BINARIESDIRECTORY)\vpack'
 
-# 4. Create VPack using the specified package name and version number.
-- task: PkgESVPack@12
-  inputs:
-    vPackCmd: 'push'
-    versionAs: 'parts'
-    sourceDirectory: '$(BUILD.BINARIESDIRECTORY)\vpack'
-    description: '$(Build.Repository.Name).$(Build.SourceBranchName)'
-    pushPkgName: directxmath.oss
-    configurations: 'release'
-    platforms: 'any cpu'
-    majorVer: '3'
-    minorVer: '1'
-    patchVer: '7'
-    prereleaseVer: '$(Build.BuildId)'
-    provData: true
-    paToken: $(VPACK_PAT)
+  - template: v2/Steps/PackageES/Windows.SDL.Sources.Analysis.OS.Undocked.yml@templates_onebranch
+    parameters:
+        globalsdl:
+            codeql:
+                tsandjs:
+                  enabled: false
+                python:
+                  enabled: false
+                psscriptanalyzer:
+                  enable: true
+            prefast:
+                enabled: true
+
+  - template: v2/Steps/PackageES/Windows.SDL.Binary.Analysis.OS.Undocked.yml@templates_onebranch
+    parameters:
+        variables:
+            ob_outputDirectory: '$(BUILD.BINARIESDIRECTORY)'
+
+  - task: PkgESVPack@12
+    inputs:
+      vPackCmd: 'push'
+      versionAs: 'parts'
+      sourceDirectory: '$(BUILD.BINARIESDIRECTORY)\vpack'
+      description: '$(Build.Repository.Name).$(Build.SourceBranchName)'
+      pushPkgName: directxmath.oss
+      owner: 'directxtkdev'
+      configurations: 'release'
+      platforms: 'any cpu'
+      majorVer: '3'
+      minorVer: '1'
+      patchVer: '7'
+      prereleaseVer: '$(Build.BuildId)'
+      provData: true
+      paToken: $(VPACK_PAT)
