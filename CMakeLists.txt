@@ -1,7 +1,7 @@
 # Copyright (c) Microsoft Corporation.
 # Licensed under the MIT License.
 
-cmake_minimum_required (VERSION 3.11)
+cmake_minimum_required (VERSION 3.14)
 
 set(DIRECTXMATH_VERSION 3.1.8)
 
@@ -10,6 +10,8 @@ project(DirectXMath
   DESCRIPTION "DirectXMath SIMD C++ math library"
   HOMEPAGE_URL "https://go.microsoft.com/fwlink/?LinkID=615560"
   LANGUAGES CXX)
+
+include(GNUInstallDirs)
 
 #--- Library
 set(LIBRARY_HEADERS
@@ -28,7 +30,9 @@ add_library(${PROJECT_NAME} INTERFACE)
 
 target_include_directories(${PROJECT_NAME} INTERFACE
   $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/Inc>
-  $<INSTALL_INTERFACE:include/${PROJECT_NAME}>)
+  $<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}/directxmath>)
+
+target_compile_features(${PROJECT_NAME} INTERFACE cxx_std_11)
 
 #--- Package
 include(CMakePackageConfigHelpers)
@@ -36,30 +40,30 @@ include(CMakePackageConfigHelpers)
 string(TOLOWER ${PROJECT_NAME} PACKAGE_NAME)
 
 write_basic_package_version_file(
-  ${PROJECT_BINARY_DIR}/cmake/${PACKAGE_NAME}-config-version.cmake
+  ${PACKAGE_NAME}-config-version.cmake
   VERSION ${DIRECTXMATH_VERSION}
-  COMPATIBILITY AnyNewerVersion)
+  COMPATIBILITY AnyNewerVersion
+  ARCH_INDEPENDENT)
 
 install(TARGETS ${PROJECT_NAME}
   EXPORT ${PROJECT_NAME}-targets
-  ARCHIVE DESTINATION lib
-  LIBRARY DESTINATION lib
-  RUNTIME DESTINATION bin)
+  ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+  RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 
 configure_package_config_file(${CMAKE_CURRENT_SOURCE_DIR}/.nuget/${PROJECT_NAME}-config.cmake.in
-  ${PROJECT_BINARY_DIR}/cmake/${PACKAGE_NAME}-config.cmake
-  INSTALL_DESTINATION cmake/})
+  ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME}-config.cmake
+  INSTALL_DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PACKAGE_NAME})
 
 install(EXPORT ${PROJECT_NAME}-targets
   FILE ${PROJECT_NAME}-targets.cmake
   NAMESPACE Microsoft::
-  DESTINATION cmake/)
+  DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PACKAGE_NAME})
 
 install(FILES ${LIBRARY_HEADERS}
-  DESTINATION include/${PROJECT_NAME})
+  DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/directxmath)
 
-install(
-  FILES
-    ${PROJECT_BINARY_DIR}/cmake/${PACKAGE_NAME}-config.cmake
-    ${PROJECT_BINARY_DIR}/cmake/${PACKAGE_NAME}-config-version.cmake
-  DESTINATION cmake/)
+install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME}-config.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/${PACKAGE_NAME}-config-version.cmake
+  DESTINATION ${CMAKE_INSTALL_DATAROOTDIR}/${PACKAGE_NAME})
