@@ -98,4 +98,4 @@ jobs:
       patchVer: '7'
       prereleaseVer: '$(Build.BuildId)'
       provData: true
-      paToken: $(VPACK_PAT)
+      vpackToken: $(VPACK_PAT)
