@@ -95,7 +95,7 @@ jobs:
       platforms: 'any cpu'
       majorVer: '3'
       minorVer: '1'
-      patchVer: '7'
+      patchVer: '8'
       prereleaseVer: '$(Build.BuildId)'
       provData: true
       vpackToken: $(VPACK_PAT)
