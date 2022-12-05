@@ -1,4 +1,8 @@
-# This file is the build Pipeline to build and submit the DirectXMath vpack to Microsoft Collections Artifacts. 
+# Copyright(c) Microsoft Corporation. All rights reserved.
+#
+# http://go.microsoft.com/fwlink/?LinkID=615560
+
+# Builds and submit the DirectXMath vpack to Microsoft Collections Artifacts for the OS.
 
 variables:
   VPACK_PAT: $(VPackPAT)
