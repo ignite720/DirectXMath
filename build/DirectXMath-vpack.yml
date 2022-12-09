@@ -8,6 +8,9 @@ variables:
   VPACK_PAT: $(VPackPAT)
   BUILD_PAT: $(BuildToken)
   USER_PAT: $(UserToken)
+  DXMATH_MAJOR_VER: $(DirectXMathVersionMajor)
+  DXMATH_MINOR_VER: $(DirectXMathVersionMinor1)
+  DXMATH_PATCH_VER: $(DirectXMathVersionMinor2)
 
 resources:
   repositories:
@@ -38,6 +41,7 @@ jobs:
     clean: outputs
   steps:
   - checkout: self
+    fetchTags: false
     path: 's'
 
   - task: PkgESSetupBuild@12
@@ -99,9 +103,9 @@ jobs:
       owner: 'directxtkdev'
       configurations: 'release'
       platforms: 'any cpu'
-      majorVer: '3'
-      minorVer: '1'
-      patchVer: '8'
+      majorVer: '$(DXMATH_MAJOR_VER)'
+      minorVer: '$(DXMATH_MINOR_VER)'
+      patchVer: '$(DXMATH_PATCH_VER)'
       prereleaseVer: '$(Build.BuildId)'
       provData: true
       vpackToken: $(VPACK_PAT)
