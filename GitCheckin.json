@@ -11,7 +11,7 @@
       "CheckinFiles": 
        [
          {
-           "source":"directxmath.oss/directxmath.oss.man",
+           "source":"directxmath.oss.man",
            "path": "/onecoreuap/windows/DirectX/misc/directxmath/vpack",
            "type": "File"
          }
