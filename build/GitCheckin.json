@@ -1,0 +1,22 @@
+{
+    "Branch": [
+      {
+      "collection":"microsoft",
+      "project":"OS",
+      "repo":"os.2020",
+      "name":"official/rs_onecore_sigma_grfx_dev",
+      "completePR":"False",
+      "pullRequestTitle":"Update DirectXMath vpack to latest release from MSCodeHub",
+      "optionalReviewers":"billkris@microsoft.com;shawnhar@microsoft.com",
+      "CheckinFiles": 
+       [
+         {
+           "source":"directxmath.oss.man",
+           "path": "/onecoreuap/windows/DirectX/misc/directxmath/vpack",
+           "type": "File"
+         }
+       ]
+      }
+    ]
+  }
+  
