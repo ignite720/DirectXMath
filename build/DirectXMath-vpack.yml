@@ -115,8 +115,8 @@ jobs:
   - task: PkgESFCIBGit@12
     displayName: 'Package ES - Submit Files to Git'
     inputs:
-      configPath: 'build/GitCheckin.json' # the path to the GitCheckin.json config file.
-      artifactsDirectory: '$(Build.ArtifactStagingDirectory)' # parent directory for the artifacts to submit to the destination repo.
+      configPath: 'build/GitCheckin.json'
+      artifactsDirectory: $(XES_VPACKMANIFESTDIRECTORY)
       userToken: '$(USER_PAT)'
       prTimeOut: 5
       paToken: '$(BUILD_PAT)'
