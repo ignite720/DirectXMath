@@ -118,5 +118,5 @@ jobs:
       configPath: 'build/GitCheckin.json' # the path to the GitCheckin.json config file.
       artifactsDirectory: '$(Build.ArtifactStagingDirectory)' # parent directory for the artifacts to submit to the destination repo.
       userToken: '$(USER_PAT)'
-       rTimeOut: 5
+      prTimeOut: 5
       paToken: '$(BUILD_PAT)'
