@@ -110,6 +110,7 @@ extends:
           ob_updateOSManifest_destination: $(Build.ArtifactStagingDirectory)
           ob_updateOSManifest_gitcheckinConfigPath: 'GitCheckin.json'
           ob_updateOSManifest_manifest: ''
+          ob_updateOSManifest_patoken: $(BuildToken)
           ##    << Please refer wiki for more Update OS Manifest options >>
 
         steps:
