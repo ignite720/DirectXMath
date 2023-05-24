@@ -108,7 +108,7 @@ extends:
           ob_updateOSManifest_osbranch: 'official/rs_onecore_sigma_grfx_dev'
           ob_updateOSManifest_source: '/onecoreuap/windows/DirectX/misc/directxmath/vpack/directxmath.oss.man'
           ob_updateOSManifest_destination: $(Build.ArtifactStagingDirectory)
-          ob_updateOSManifest_destination: 'GitCheckin.json'
+          ob_updateOSManifest_gitcheckinConfigPath: 'GitCheckin.json'
           ob_updateOSManifest_manifest: ''
           ##    << Please refer wiki for more Update OS Manifest options >>
 
