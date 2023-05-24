@@ -75,15 +75,6 @@ extends:
       # suppression:
       #   suppressionFile: $(Build.SourcesDirectory)\.gdn\global.gdnsuppress
 
-      updateOSManifest: # Information for updating OS Manifest OS repository (Learn more: https://www.osgwiki.com/wiki/OneBranch_Windows_Undocked_Pipelines)
-        enabled: true
-        osbranch: 'official/rs_onecore_sigma_grfx_dev'
-        source: '/onecoreuap/windows/DirectX/misc/directxmath/vpack/directxmath.oss.man'
-        destination: $(Build.ArtifactStagingDirectory)
-        gitcheckinConfigPath: 'GitCheckin.json'
-        manifest: ''
-      ##    << Please refer wiki for more Update OS Manifest options >>
-
     stages:
     - stage: build
       jobs:
@@ -112,12 +103,20 @@ extends:
           ob_createvpack_verbose: true
           # ##    << Please refer wiki for more Vpack options >>
 
+          # updateOSManifest: # Information for updating OS Manifest OS repository (Learn more: https://www.osgwiki.com/wiki/OneBranch_Windows_Undocked_Pipelines)
+          ob_updateOSManifest_enabled: true 
+          ob_updateOSManifest_source: 'official/rs_onecore_sigma_grfx_dev'
+          ob_updateOSManifest_source: '/onecoreuap/windows/DirectX/misc/directxmath/vpack/directxmath.oss.man'
+          ob_updateOSManifest_destination: $(Build.ArtifactStagingDirectory)
+          ob_updateOSManifest_destination: 'GitCheckin.json'
+          ob_updateOSManifest_manifest: ''
+          ##    << Please refer wiki for more Update OS Manifest options >>
+
         steps:
           - task: UseDotNet@2
             continueOnError: true
             inputs:
               packageType: 'sdk'
-              useGlobalJson: true
               performMultiLevelLookup: true
 
           - task: onebranch.pipeline.version@1 # generates automatic version. For other versioning options check https://aka.ms/obpipelines/versioning
