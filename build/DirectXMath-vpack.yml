@@ -105,7 +105,7 @@ extends:
 
           # updateOSManifest: # Information for updating OS Manifest OS repository (Learn more: https://www.osgwiki.com/wiki/OneBranch_Windows_Undocked_Pipelines)
           ob_updateOSManifest_enabled: true 
-          ob_updateOSManifest_source: 'official/rs_onecore_sigma_grfx_dev'
+          ob_updateOSManifest_osbranch: 'official/rs_onecore_sigma_grfx_dev'
           ob_updateOSManifest_source: '/onecoreuap/windows/DirectX/misc/directxmath/vpack/directxmath.oss.man'
           ob_updateOSManifest_destination: $(Build.ArtifactStagingDirectory)
           ob_updateOSManifest_destination: 'GitCheckin.json'
