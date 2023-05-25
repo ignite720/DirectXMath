@@ -96,11 +96,11 @@ extends:
           ob_createvpack_versionAs: parts
           ob_createvpack_majorVer: '$(DXMATH_MAJOR_VER)'
           ob_createvpack_minorVer: '$(DXMATH_MINOR_VER)'
-          ob_createvpack_patchVer: '$(DXMATH_MINOR_VER)'
+          ob_createvpack_patchVer: '$(DXMATH_PATCH_VER)'
           ob_createvpack_prereleaseVer: '$(Build.BuildId)'
           ob_createvpack_propsFile: true
           ob_createvpack_provData: true
-          ob_createvpack_verbose: true
+          ob_createvpack_verbose: false
           # ##    << Please refer wiki for more Vpack options >>
 
           # updateOSManifest: # Information for updating OS Manifest OS repository (Learn more: https://www.osgwiki.com/wiki/OneBranch_Windows_Undocked_Pipelines)
