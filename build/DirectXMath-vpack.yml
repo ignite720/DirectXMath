@@ -101,6 +101,7 @@ extends:
           ob_createvpack_propsFile: true
           ob_createvpack_provData: true
           ob_createvpack_verbose: false
+          ob_createvpack_targetDestinationDirectory: '$(Destination)'
           # ##    << Please refer wiki for more Vpack options >>
 
           # updateOSManifest: # Information for updating OS Manifest OS repository (Learn more: https://www.osgwiki.com/wiki/OneBranch_Windows_Undocked_Pipelines)
