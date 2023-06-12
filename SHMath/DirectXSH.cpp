@@ -8,9 +8,10 @@
 //-------------------------------------------------------------------------------------
 
 #ifdef _MSC_VER
-#pragma warning( disable : 4619 4456 )
+#pragma warning( disable : 4619 4456 5264)
 // C4619 #pragma warning warnings
 // C4456 declaration hides previous local declaration
+// C5264 'const' variable is not used
 #endif
 
 #ifdef __clang__
@@ -18,6 +19,8 @@
 #pragma clang diagnostic ignored "-Wshadow"
 #pragma clang diagnostic ignored "-Wunused-const-variable"
 #pragma clang diagnostic ignored "-Wunused-function"
+#pragma clang diagnostic ignored "-Wunknown-warning-option"
+#pragma clang diagnostic ignored "-Wunsafe-buffer-usage"
 #endif
 
 #include "DirectXSH.h"
