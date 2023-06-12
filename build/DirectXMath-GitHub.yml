@@ -12,21 +12,42 @@ schedules:
     include:
     - main
 
+trigger:
+  branches:
+    include:
+    - main
+  paths:
+    exclude:
+    - README.md
+    - HISTORY.md
+    - SECURITY.md
+    - LICENSE
+pr:
+  branches:
+    include:
+    - main
+  paths:
+    exclude:
+    - README.md
+    - HISTORY.md
+    - SECURITY.md
+    - LICENSE
+  drafts: false
+
 resources:
   repositories:
   - repository: self
     type: git
     ref: refs/heads/main
-    trigger:
-    - main
 
 name: $(Year:yyyy).$(Month).$(DayOfMonth)$(Rev:.r)
 
-pool:
-  vmImage: windows-2019
-
 variables:
   GITHUB_PAT: $(GITHUBPUBLICTOKEN)
+  Codeql.Enabled: true
+
+pool:
+  vmImage: windows-2019
 
 jobs:
 - job: BUILD_DEV16
