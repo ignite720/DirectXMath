@@ -37,6 +37,7 @@ variables:
   DXMATH_MAJOR_VER: $(DirectXMathVersionMajor)
   DXMATH_MINOR_VER: $(DirectXMathVersionMinor1)
   DXMATH_PATCH_VER: $(DirectXMathVersionMinor2)
+  TARGET_BRANCH: official/rs_sigma_grfx_dev
 
   # Docker image which is used to build the project https://aka.ms/obpipelines/containers
   WindowsContainerImage: 'onebranch.azurecr.io/windows/ltsc2019/vse2022:latest'
@@ -106,7 +107,7 @@ extends:
 
           # updateOSManifest: # Information for updating OS Manifest OS repository (Learn more: https://www.osgwiki.com/wiki/OneBranch_Windows_Undocked_Pipelines)
           ob_updateOSManifest_enabled: true 
-          ob_updateOSManifest_osbranch: 'official/rs_onecore_sigma_grfx_dev'
+          ob_updateOSManifest_osbranch: '$(TARGET_BRANCH)'
           ob_updateOSManifest_source: '/onecoreuap/windows/DirectX/misc/directxmath/vpack/directxmath.oss.man'
           ob_updateOSManifest_destination: $(Build.ArtifactStagingDirectory)
           ob_updateOSManifest_gitcheckinConfigPath: 'GitCheckin.json'
