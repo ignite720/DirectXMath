@@ -37,7 +37,7 @@ variables:
   DXMATH_MAJOR_VER: $(DirectXMathVersionMajor)
   DXMATH_MINOR_VER: $(DirectXMathVersionMinor1)
   DXMATH_PATCH_VER: $(DirectXMathVersionMinor2)
-  TARGET_BRANCH: official/rs_sigma_grfx_dev
+  TARGET_BRANCH: $(TargetBranch)
 
   # Docker image which is used to build the project https://aka.ms/obpipelines/containers
   WindowsContainerImage: 'onebranch.azurecr.io/windows/ltsc2019/vse2022:latest'
@@ -106,7 +106,7 @@ extends:
           # ##    << Please refer wiki for more Vpack options >>
 
           # updateOSManifest: # Information for updating OS Manifest OS repository (Learn more: https://www.osgwiki.com/wiki/OneBranch_Windows_Undocked_Pipelines)
-          ob_updateOSManifest_enabled: true 
+          ob_updateOSManifest_enabled: true
           ob_updateOSManifest_osbranch: '$(TARGET_BRANCH)'
           ob_updateOSManifest_source: '/onecoreuap/windows/DirectX/misc/directxmath/vpack/directxmath.oss.man'
           ob_updateOSManifest_destination: $(Build.ArtifactStagingDirectory)
@@ -150,3 +150,10 @@ extends:
                 README.md
                 LICENSE
               TargetFolder: '$(OUTPUTROOT)'
+
+          - task: PowerShell@2
+            displayName: 'Setup target branch'
+            inputs:
+              targetType: 'inline'
+              script: "(Get-Content build/GitCheckin.json.in) | Foreach-Object {$_ -replace 'TARGET_BRANCH','$(TARGET_BRANCH)'}  | Out-File GitCheckin.json"
+              workingDirectory: '$(Build.SourcesDirectory)'

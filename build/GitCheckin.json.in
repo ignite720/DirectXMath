@@ -4,7 +4,7 @@
       "collection":"microsoft",
       "project":"OS",
       "repo":"os.2020",
-      "name":"official/rs_sigma_grfx_dev",
+      "name":"TARGET_BRANCH",
       "completePR":"False",
       "pullRequestTitle":"Update DirectXMath vpack to latest release from MSCodeHub",
       "CheckinFiles": 
