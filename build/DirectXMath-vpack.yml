@@ -113,6 +113,7 @@ extends:
           ob_updateOSManifest_gitcheckinConfigPath: 'GitCheckin.json'
           ob_updateOSManifest_manifest: ''
           ob_updateOSManifest_patoken: $(BuildToken)
+          ob_updateOSManifest_userToken: $(UserToken)
           ##    << Please refer wiki for more Update OS Manifest options >>
 
         steps:
