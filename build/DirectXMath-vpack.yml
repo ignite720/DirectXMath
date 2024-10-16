@@ -82,6 +82,7 @@ extends:
           osbranch: '$(TARGET_BRANCH)'
           source: '/onecoreuap/windows/DirectX/misc/directxmath/vpack/directxmath.oss.man'
           destination: $(Build.ArtifactStagingDirectory)
+          gitcheckinConfigPath: 'GitCheckin.json'
           manifest: ''
 
     stages:
