@@ -36,6 +36,7 @@ variables:
   DXMATH_MAJOR_VER: $(DirectXMathVersionMajor)
   DXMATH_MINOR_VER: $(DirectXMathVersionMinor1)
   DXMATH_PATCH_VER: $(DirectXMathVersionMinor2)
+  TARGET_BRANCH: $(TargetBranch) 
 
   # Docker image which is used to build the project https://aka.ms/obpipelines/containers
   WindowsContainerImage: 'onebranch.azurecr.io/windows/ltsc2019/vse2022:latest'
