@@ -76,14 +76,6 @@ extends:
         enabled: true # onebranch publish all sdl results to TSA. If TSA is disabled all SDL tools will forced into 'break' build mode.  Please provide TSAOptions.json.
       # suppression:
       #   suppressionFile: $(Build.SourcesDirectory)\.gdn\global.gdnsuppress
-      
-        updateOSManifest: # Information for updating OS Manifest OS repository (Learn more: https://aka.ms/wud/template)
-          enabled: true
-          osbranch: '$(TARGET_BRANCH)'
-          source: '/onecoreuap/windows/DirectX/misc/directxmath/vpack/directxmath.oss.man'
-          destination: $(Build.ArtifactStagingDirectory)
-          gitcheckinConfigPath: 'GitCheckin.json'
-          manifest: ''
 
     stages:
     - stage: build
@@ -113,6 +105,14 @@ extends:
           ob_createvpack_verbose: false
           ob_createvpack_targetDestinationDirectory: '$(Destination)'
           # ##    << Please refer wiki for more Vpack options >>
+
+          # updateOSManifest: # Information for updating OS Manifest OS repository (Learn more: https://aka.ms/wud/template)
+          ob_updateOSManifest_enabled: true
+          ob_updateOSManifest_osbranch: '$(TARGET_BRANCH)'
+          ob_updateOSManifest_source: '/onecoreuap/windows/DirectX/misc/directxmath/vpack/directxmath.oss.man'
+          ob_updateOSManifest_destination: $(Build.ArtifactStagingDirectory)
+          ob_updateOSManifest_gitcheckinConfigPath: 'GitCheckin.json'
+          ob_updateOSManifest_manifest: ''
 
         steps:
           - task: UseDotNet@2
