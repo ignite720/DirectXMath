@@ -18,26 +18,33 @@ trigger:
     - main
   paths:
     exclude:
-    - README.md
-    - HISTORY.md
-    - SECURITY.md
+    - '*.md'
     - LICENSE
+    - '.github/*'
+    - '.nuget/*'
+    - build/*.ps1
+
 pr:
   branches:
     include:
     - main
   paths:
     exclude:
-    - README.md
-    - HISTORY.md
-    - SECURITY.md
+    - '*.md'
     - LICENSE
+    - '.github/*'
+    - '.nuget/*'
   drafts: false
 
 resources:
   repositories:
   - repository: self
     type: git
+    ref: refs/heads/main
+  - repository: testRepo
+    name: walbourn/directxmathtest
+    type: github
+    endpoint: microsoft
     ref: refs/heads/main
 
 name: $(Year:yyyy).$(Month).$(DayOfMonth)$(Rev:.r)
@@ -46,7 +53,7 @@ pool:
   vmImage: ubuntu-20.04
 
 variables:
-  GITHUB_PAT: $(GITHUBPUBLICTOKEN)
+  Codeql.Enabled: false
 
 jobs:
 - job: BUILD_WSL
@@ -55,10 +62,14 @@ jobs:
   - checkout: self
     clean: true
     fetchTags: false
-  - task: CmdLine@2
-    displayName: Fetch tests
-    inputs:
-      script: git clone --quiet --no-tags https://%GITHUB_PAT%@github.com/walbourn/directxmathtest.git Tests
+    fetchDepth: 1
+    path: 's'
+  - checkout: testRepo
+    displayName: Fetch Tests
+    clean: true
+    fetchTags: false
+    fetchDepth: 1
+    path: 's/Tests'
   - task: CMake@1
     displayName: DirectXMath Tests
     inputs:
