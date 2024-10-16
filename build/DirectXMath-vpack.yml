@@ -5,9 +5,9 @@
 # This pipeline was created by EasyStart from a sample located at:                                                                  #
 #                               https://aka.ms/obpipelines/easystart/samples                                                        #
 #                                                                                                                                   #
-# Windows Undocked Wiki:        https://www.osgwiki.com/wiki/Windows_Undocked_Template                                              #
+# OB Windows Undocked Wiki:     https://aka.ms/wud/template                                                                         #
 # General OB Documentation:     https://aka.ms/obpipelines                                                                          #
-# Build MSBuild project:        https://dev.azure.com/onebranch/OneBranch/_wiki/wikis/OneBranch.wiki/6045/Build-MSBuild-project     #
+# Build .NET Core project:      https://dev.azure.com/onebranch/OneBranch/_wiki/wikis/OneBranch.wiki/4591/Build-.NET-Core-project   #
 # Yaml Schema:                  https://aka.ms/obpipelines/yaml/schema                                                              #
 # Retail Tasks:                 https://aka.ms/obpipelines/tasks                                                                    #
 # Support:                      https://aka.ms/onebranchsup                                                                         #
@@ -93,12 +93,12 @@ extends:
           # read more about custom job pool types at https://aka.ms/obpipelines/yaml/jobs
           type: windows
 
-        variables:
-          # binaries scanning tools are run on this directory ( https://onebranch.visualstudio.com/OneBranch/_wiki/wikis/OneBranch.wiki/4634/SDL-(Static-Analysis)-for-Containerized-Workflows ) and
+        variables: # More settings at https://aka.ms/obpipelines/yaml/jobs
+          # binaries scanning tools are run on this directory ( https://onebranch.visualstudio.com/OneBranch/_wiki/wikis/OneBranch.wiki/4634/SDL-(Static-Analysis)-for-Containerized-Workflows ) and 
           # this directory is uploaded to pipeline artifacts. More info at https://aka.ms/obpipelines/artifacts
           ob_outputDirectory: '$(OUTPUTROOT)'
 
-          # createVPack: # information for Vpack (Learn more: https://www.osgwiki.com/wiki/OneBranch_Windows_Undocked_Pipelines)
+          # createVPack: # information for Vpack (Learn more: https://aka.ms/wud/template)
           ob_createvpack_enabled: true
           ob_createvpack_packagename: directxmath.oss
           ob_createvpack_description: '$(Build.Repository.Name).$(Build.SourceBranchName)'
