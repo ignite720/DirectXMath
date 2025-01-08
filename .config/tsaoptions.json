@@ -1,9 +1,10 @@
 {
 	"instanceUrl": "https://microsoft.visualstudio.com",
-	"projectName": "Xbox",
+	"projectName": "xbox",
 	"areaPath": "Xbox\\Developer\\DeveloperEcosystem\\DeveloperTools",
-	"iterationPath": "Xbox",
+	"iterationPath": "Xbox\\Backlog",
 	"notificationAliases": ["directxtkdev@microsoft.com"],
 	"ignoreBranchName": true,
+	"template": "TFSOSGXbox",
 	"ServiceTreeID": "c8a040a5-7881-4b08-8216-6e754fd858a4"
 }
