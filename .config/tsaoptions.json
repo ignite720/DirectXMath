@@ -1,7 +1,7 @@
 {
 	"instanceUrl": "https://microsoft.visualstudio.com",
 	"projectName": "Xbox",
-	"areaPath": "Xbox\\Developer\\DeveloperEcosystem",
+	"areaPath": "Xbox\\Developer\\DeveloperEcosystem\\DeveloperTools",
 	"iterationPath": "Xbox",
 	"notificationAliases": ["directxtkdev@microsoft.com"],
 	"ignoreBranchName": true,
